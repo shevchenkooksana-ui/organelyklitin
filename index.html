@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Структура евкаріотичної клітини — інтерактивний урок</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔬</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f8;--card:#fff;--line:#dfe3ea;--ink:#1d2433;--mut:#5b6577;--or:#ffa800;--or2:#d98a00;--navy:#1f2a3c;--bl:#e5f1ff;--bl2:#9cc8f5;--ye:#fff1c9;--ye2:#f3d37a;--gr:#e3f5e1;--gr2:#9bd596;--pu:#f1e4f8;--pu2:#c99be0;--ok:#2e9e4f;--no:#d64545}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 16px/1.5 Nunito,"Segoe UI",system-ui,sans-serif}
+header{max-width:980px;margin:0 auto;padding:18px 16px 0}
+h1{font-size:clamp(22px,4vw,30px);margin:0 0 4px;font-weight:900}
+.sub{color:var(--mut);margin:0 0 12px}
+nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:thin}
+nav button{flex:none;font:800 14px Nunito,sans-serif;background:#fff;border:1.5px solid var(--line);border-bottom-width:4px;border-radius:12px;padding:8px 14px;cursor:pointer;color:var(--ink)}
+nav button.on{background:var(--ye);border-color:var(--ye2)}
+main{max-width:980px;margin:0 auto;padding:0 16px 40px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1.5px solid var(--line);border-bottom-width:4px;border-radius:18px;padding:18px;margin:0 0 14px}
+h2{margin:0 0 4px;font-size:22px;font-weight:900;display:flex;gap:10px;align-items:center}
+.ic{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--ye);font-size:19px}
+p.d{color:var(--mut);margin:4px 0 14px}
+.pill{display:inline-block;background:var(--ye);border:1.5px solid var(--ye2);border-radius:99px;padding:2px 11px;font-size:13px;font-weight:800;margin:0 6px 6px 0}
+.btn{font:900 15px Nunito,sans-serif;background:var(--or);color:#fff;border:0;border-bottom:4px solid var(--or2);border-radius:12px;padding:10px 20px;cursor:pointer}
+.btn:active{transform:translateY(2px);border-bottom-width:2px}
+.btn.g{background:#fff;color:var(--ink);border:1.5px solid var(--line);border-bottom:4px solid #c9cfda}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.fl{min-height:140px;text-align:left;font:700 15px/1.4 Nunito,sans-serif;border:1.5px solid var(--bl2);border-bottom-width:4px;border-radius:16px;background:var(--bl);padding:14px;cursor:pointer;color:var(--ink)}
+.fl:nth-child(4n+2){background:var(--ye);border-color:var(--ye2)}.fl:nth-child(4n+3){background:var(--gr);border-color:var(--gr2)}.fl:nth-child(4n+4){background:var(--pu);border-color:var(--pu2)}
+.fl b{display:block;font-size:17px;font-weight:900}.fl small{font-size:13px;color:var(--mut);font-weight:700}
+.fl.on b{margin-bottom:6px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:620px){.cols{grid-template-columns:1fr}}
+.it{display:block;width:100%;text-align:left;font:800 15px/1.35 Nunito,sans-serif;background:#fff;border:1.5px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:10px 12px;margin:0 0 8px;cursor:pointer;color:var(--ink)}
+.it.sel{background:var(--bl);border-color:var(--bl2)}
+.it.ok,.ok{background:var(--gr)!important;border-color:var(--gr2)!important}
+.it.bad,.bad{background:#fde5e5!important;border-color:#eba0a0!important}
+.it:disabled{cursor:default;opacity:.85}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;border:1.5px solid var(--line);border-radius:14px;padding:8px 12px;margin:0 0 8px}
+.row .seg button{font:800 14px Nunito,sans-serif;border:1.5px solid var(--line);border-bottom-width:3px;background:#fff;border-radius:10px;padding:5px 12px;cursor:pointer;margin-left:6px}
+.row .seg button.sel{background:var(--bl);border-color:var(--bl2)}
+.msg{margin-top:10px;font-weight:900}
+select{font:800 15px Nunito,sans-serif;border:1.5px solid var(--bl2);border-radius:10px;background:var(--bl);padding:2px 6px;margin:0 3px}
+.gaps{line-height:2.4;font-size:17px}
+.q{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:0 0 14px;background:#fff}
+.qh{display:flex;gap:10px;align-items:flex-start;font-weight:900;margin-bottom:10px}
+.num{flex:none;background:var(--navy);color:#fff;border-radius:8px;min-width:28px;height:28px;display:grid;place-items:center;font-size:14px}
+.pt{margin-left:auto;flex:none;background:#eef0f4;border-radius:99px;padding:0 10px;font-size:13px}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:620px){.ops{grid-template-columns:1fr}}
+.op{display:flex;gap:8px;align-items:center;border:1.5px solid;border-bottom-width:4px;border-radius:14px;padding:9px 11px;cursor:pointer;font-weight:700}
+.op input{position:absolute;opacity:0;pointer-events:none}
+.op b{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:13px}
+.c0{background:var(--bl);border-color:var(--bl2)}.c0 b{background:#4f9be8}
+.c1{background:var(--ye);border-color:var(--ye2)}.c1 b{background:#f2a516}
+.c2{background:var(--gr);border-color:var(--gr2)}.c2 b{background:#4cb04a}
+.c3{background:var(--pu);border-color:var(--pu2)}.c3 b{background:#9b59c0}
+.op:has(input:checked){outline:3px solid var(--navy);outline-offset:-1px}
+.op:has(input:focus-visible),button:focus-visible,select:focus-visible,input[type=text]:focus-visible{outline:3px solid #2f6fe0;outline-offset:2px}
+.op.right{outline:3px solid var(--ok)}.op.wrong{outline:3px solid var(--no);opacity:.8}
+input[type=text]{font:700 16px Nunito,sans-serif;border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;width:100%;max-width:360px}
+.fb{margin-top:8px;font-size:14px;color:var(--mut)}
+.big{font-size:42px;font-weight:900}
+.chosen{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chosen span{background:var(--navy);color:#fff;border-radius:8px;padding:2px 10px;font-size:13px}
+@media(prefers-reduced-motion:no-preference){.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}}
+</style>
+</head>
+<body>
+<header>
+<h1>🔬 Структура евкаріотичної клітини</h1>
+<p class="sub">Біологія, 9 клас · §17–18: цитоплазма, рибосоми, органели руху, клітинний центр, ЕПС, комплекс Гольджі, лізосоми, вакуолі</p>
+<nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const L="АБВГ";
+const T=[["start","🏠 Старт"],["org","🧩 Органели"],["mat","🔗 Відповідності"],["cls","🗂 Класифікація"],["gap","✏️ Пропуски"],["ord","🔢 Послідовність"],["tf","✅ Правда/Хибно"],["test","📝 Тестування"],["self","🌟 Самооцінювання"]];
+const nav=$("#nav"),main=$("#main"),S={};
+T.forEach(([id,n])=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>go(id);b.dataset.id=id;nav.append(b);
+const s=document.createElement("section");s.id="s-"+id;main.append(s);S[id]=s});
+function go(id){T.forEach(([i])=>{S[i].classList.toggle("on",i===id);$(`nav [data-id=${i}]`).classList.toggle("on",i===id)});scrollTo(0,0)}
+const head=(i,t,d)=>`<h2><span class="ic">${i}</span>${t}</h2><p class="d">${d}</p>`;
+const card=(h,id)=>{S[id].innerHTML=`<div class="card">${h}</div>`;return S[id].firstChild};
+
+/* START */
+card(`${head("🎯","Ласкаво просимо на урок!","Пройдіть вправи по порядку або обирайте будь-яку вкладку.")}
+<p><b>Після уроку ви зможете:</b></p>
+<ul><li>розрізняти зернисту та незернисту ендоплазматичну сітку;</li><li>пояснювати функції комплексу Гольджі, лізосом і вакуоль;</li><li>відрізняти мембранні та немембранні органели;</li><li>описувати шлях білка від рибосоми до виходу з клітини.</li></ul>
+<p><span class="pill">9 типів завдань</span><span class="pill">Тест на 12 балів</span><span class="pill">Картка самооцінювання</span></p>
+<p><b>Мотивація:</b> клітина схожа на місто: є «заводи», «пошта», «утилізація відходів» і «каркас». Хто що виконує — дізнаємося нижче.</p>
+<button class="btn" onclick="go('org')">Розпочати</button>`,"start");
+
+/* ORGANELLES */
+const O=[["Зерниста ЕПС","Канальці й цистерни з рибосомами на мембранах. Біосинтез білків, синтез компонентів мембран."],["Незерниста ЕПС","Без рибосом. Синтез ліпідів і вуглеводів, деяких гормонів; знешкодження отрут (клітини печінки)."],["Комплекс Гольджі","Купка мішечків — диктіосома. Накопичує, змінює, сортує речовини й пакує їх у пухирці."],["Лізосоми","Пухирці з ферментами. Внутрішньоклітинне травлення, розщеплення старих компонентів, захист."],["Вакуолі","Порожнини з рідиною. У рослин — клітинний сік і тургор; скоротливі — регулюють тиск."],["Цитоскелет","Мікротрубочки й мікронитки. Опора, закріплення та переміщення органел."],["Рибосоми","Немембранні; велика й мала субодиниці. Складають білки з амінокислот за мРНК."],["Клітинний центр","Дві центріолі під прямим кутом. Формує веретено поділу, мікротрубочки, джгутики й війки."],["Джгутики та війки","Вирости з мікротрубочок. Рух клітини, струми води, чутлива й захисна функції."]];
+let c=card(`${head("🧩","Органели: розкрийте картки","Натисніть на картку — побачите функцію. Переглянуто: <b id=cnt>0</b> з 9")}<div class="grid" id="fg"></div>`,"org");
+const seen=new Set();
+O.forEach(([n,t],i)=>{const b=document.createElement("button");b.className="fl";b.innerHTML=`<b>${n}</b><small>Натисніть, щоб розкрити</small>`;
+b.onclick=()=>{const on=b.classList.toggle("on");b.innerHTML=on?`<b>${n}</b>${t}`:`<b>${n}</b><small>Натисніть, щоб розкрити</small>`;seen.add(i);$("#cnt").textContent=seen.size;if(seen.size==9)$("#cnt").after(" 🎉")};$("#fg",c).append(b)});
+
+/* MATCH */
+const M=[["Диктіосома","купка пласких мембранних мішечків комплексу Гольджі"],["Цитозоль","колоїдний розчин речовин у воді — основа цитоплазми"],["Компартмент","окрема функціональна ділянка клітини, обмежена мембраною"],["Скоротлива вакуоля","регулює тиск у прісноводних одноклітинних"],["Псевдоподії","непостійні вирости клітини для руху й фагоцитозу"],["Клітинні включення","запасні речовини чи кінцеві продукти обміну"]];
+c=card(`${head("🔗","Знайди пару","Оберіть термін ліворуч, потім його визначення праворуч.")}<div class="cols"><div id="ml"></div><div id="mr"></div></div><p class="msg" id="mm"></p><button class="btn g" id="mrs">Спочатку</button>`,"mat");
+function mat(){let sel=null,done=0;$("#ml").innerHTML=$("#mr").innerHTML=$("#mm").textContent="";
+M.forEach(([t],i)=>{const b=document.createElement("button");b.className="it";b.textContent=t;b.dataset.i=i;b.onclick=()=>{$$(".it.sel",c).forEach(x=>x.classList.remove("sel"));if(!b.disabled){b.classList.add("sel");sel=b}};$("#ml").append(b)});
+sh(M.map((m,i)=>i)).forEach(i=>{const b=document.createElement("button");b.className="it";b.textContent=M[i][1];b.onclick=()=>{if(!sel)return;if(sel.dataset.i==i){sel.className=b.className="it ok";sel.disabled=b.disabled=true;sel=null;if(++done==6)$("#mm").textContent="🎉 Усі пари знайдено!"}else{b.classList.add("bad","shake");setTimeout(()=>b.classList.remove("bad","shake"),500)}};$("#mr").append(b)})}
+$("#mrs").onclick=mat;mat();
+
+/* CLASSIFY */
+const K=[["Лізосоми",1],["Рибосоми",0],["Комплекс Гольджі",1],["Цитоскелет",0],["Вакуолі",1],["Клітинний центр",0],["Зерниста ЕПС",1],["Джгутики та війки",0],["Незерниста ЕПС",1]];
+c=card(`${head("🗂","Мембранні чи немембранні?","Оберіть тип кожної органели (за класифікацією підручника) і натисніть «Перевірити».")}<div id="kl"></div><button class="btn" id="kb">Перевірити</button> <span class="msg" id="km"></span>`,"cls");
+const kv=[];K.forEach(([n,a],i)=>{const r=document.createElement("div");r.className="row";r.innerHTML=`<span>${n}</span><span class="seg"><button>Мембранна</button><button>Немембранна</button></span>`;
+$$("button",r).forEach((b,j)=>b.onclick=()=>{kv[i]=j?0:1;$$("button",r).forEach((x,k)=>x.classList.toggle("sel",k==j))});$("#kl").append(r)});
+$("#kb").onclick=()=>{let s=0;$$("#kl .row").forEach((r,i)=>{const ok=kv[i]===K[i][1];s+=ok;r.classList.remove("ok","bad");r.classList.add(ok?"ok":"bad")});$("#km").textContent=`Правильно: ${s} з ${K.length}`+(s==K.length?" 🎉":" — виправте червоні рядки")};
+
+/* GAPS */
+const W=["рибосоми","білки","ліпіди","Гольджі","лізосоми","соком","ядра"],G=["рибосоми","білки","ліпіди","Гольджі","лізосоми","соком"];
+const tx="Зерниста ендоплазматична сітка має на мембранах %, тому на ній відбувається синтез %. Незерниста сітка синтезує %. Пухирці з речовинами надходять до комплексу %, від якого відокремлюються %. Вакуолі рослинних клітин заповнені клітинним %.".split("%");
+c=card(`${head("✏️","Заповни пропуски","Оберіть слово зі списку в кожному пропуску.")}<div class="gaps" id="gt"></div><button class="btn" id="gb">Перевірити</button> <span class="msg" id="gm"></span>`,"gap");
+$("#gt").innerHTML=tx.map((p,i)=>p+(i<6?`<select><option value="">…</option>${sh(W).map(w=>`<option>${w}</option>`).join("")}</select>`:"")).join("");
+$("#gb").onclick=()=>{let s=0;$$("#gt select").forEach((e,i)=>{const ok=e.value===G[i];s+=ok;e.classList.remove("ok","bad");e.classList.add(ok?"ok":"bad")});$("#gm").textContent=`Правильно: ${s} з 6`+(s==6?" 🎉":"")};
+
+/* ORDER */
+const P=["Синтез білка на рибосомах зернистої ЕПС","Транспорт білка пухирцем до комплексу Гольджі","Зміна й сортування білка в мішечках Гольджі","Відокремлення пухирця від комплексу Гольджі","Злиття пухирця з плазматичною мембраною і вихід білка з клітини"];
+c=card(`${head("🔢","Шлях білка в клітині","Натискайте кроки в правильному порядку.")}<div id="ol"></div><div class="chosen" id="oc"></div><button class="btn" id="ob">Перевірити</button> <button class="btn g" id="or">Скинути</button> <span class="msg" id="om"></span>`,"ord");
+let ch=[];function ord(){ch=[];$("#om").textContent="";$("#oc").innerHTML="";$("#ol").innerHTML="";sh(P.map((p,i)=>i)).forEach(i=>{const b=document.createElement("button");b.className="it";b.textContent=P[i];b.onclick=()=>{ch.push(i);b.disabled=true;b.classList.add("sel");b.textContent=ch.length+". "+P[i];$("#oc").innerHTML=ch.map((x,k)=>`<span>${k+1}</span>`).join("")};$("#ol").append(b)})}
+$("#or").onclick=ord;$("#ob").onclick=()=>{const ok=ch.length==5&&ch.every((v,i)=>v==i);$("#om").textContent=ok?"🎉 Правильний порядок!":ch.length<5?"Оберіть усі 5 кроків":"Спробуйте ще раз — натисніть «Скинути»"};ord();
+
+/* TRUE/FALSE */
+const F=[["Рибосоми є не лише в цитоплазмі, а й у мітохондріях і пластидах.",1],["На мембранах незернистої ЕПС розташовані рибосоми.",0],["Ферменти лізосом синтезуються на мембранах зернистої ЕПС.",1],["Скоротливі вакуолі є в клітинах прісноводних одноклітинних евкаріотів.",1],["Центріолі є в клітинах покритонасінних рослин.",0]];
+c=card(`${head("✅","Правда чи хибно?","Миттєва перевірка кожного твердження.")}<div id="fl"></div><p class="msg" id="fm"></p>`,"tf");
+let fs=0,fd=0;F.forEach(([t,a])=>{const r=document.createElement("div");r.className="row";r.innerHTML=`<span style="flex:1 1 280px">${t}</span><span class="seg"><button>Правда</button><button>Хибно</button></span>`;
+$$("button",r).forEach((b,j)=>b.onclick=()=>{if(r.dataset.d)return;r.dataset.d=1;const ok=(j==0)==!!a;r.classList.add(ok?"ok":"bad");b.classList.add("sel");fs+=ok;if(++fd==F.length)$("#fm").textContent=`Результат: ${fs} з ${F.length}`});$("#fl").append(r)});
+
+/* TEST (12 points) */
+const Q=[
+{q:"Що розташоване на мембранах зернистої ендоплазматичної сітки?",o:["Рибосоми","Лізосоми","Хлоропласти","Центріолі"],a:[0],p:1},
+{q:"Де синтезуються ліпіди та деякі гормони?",o:["На зернистій ЕПС","На незернистій ЕПС","У клітинному центрі","У цитозолі виключно"],a:[1],p:1},
+{q:"Що є основною структурною одиницею комплексу Гольджі?",o:["Цистерна","Центріоль","Диктіосома","Субодиниця"],a:[2],p:1},
+{q:"Яку функцію виконують лізосоми?",o:["Синтез білка","Внутрішньоклітинне травлення","Транспорт кисню","Утворення веретена поділу"],a:[1],p:1},
+{q:"Чим заповнені вакуолі рослинних клітин?",o:["Цитозолем","Ферментами лізосом","Клітинним соком","Повітрям"],a:[2],p:1},
+{q:"З чого складається клітинний центр (центросома)?",o:["З двох мембран","З двох центріолей","З диктіосом","З двох субодиниць"],a:[1],p:1},
+{q:"Яка органела регулює тиск у клітині інфузорії-туфельки?",o:["Травна вакуоля","Лізосома","Скоротлива вакуоля","Рибосома"],a:[2],p:1},
+{q:"Оберіть усі немембранні органели.",o:["Рибосоми","Клітинний центр","Лізосоми","Джгутики"],a:[0,1,3],m:1,p:2},
+{q:"Які функції виконує цитоскелет? Оберіть усі правильні.",o:["Опорну","Закріплення й переміщення органел","Синтез білка","Зберігання спадкової інформації"],a:[0,1],m:1,p:2},
+{q:"Одним словом: як називають окремі функціональні ділянки клітини, відокремлені мембранами?",k:["компартмент"],p:1}];
+c=card(`${head("📝","Тестування","Максимум — 12 балів. Питання з одним варіантом (1 бал), з кількома (2 бали) та коротка відповідь (1 бал).")}<div id="tq"></div><button class="btn" id="tb">Завершити тест</button><div id="tr"></div>`,"test");
+Q.forEach((x,i)=>{const d=document.createElement("div");d.className="q";const ty=x.k?"text":x.m?"checkbox":"radio";
+d.innerHTML=`<div class="qh"><span class="num">${i+1}</span><span>${x.q}</span><span class="pt">${x.p} б</span></div>`+(x.k?`<input type="text" placeholder="Ваша відповідь">`:`<div class="ops">${x.o.map((t,j)=>`<label class="op c${j}"><input type="${ty}" name="q${i}" value="${j}"><b>${L[j]}</b>${t}</label>`).join("")}</div>`)+`<div class="fb"></div>`;$("#tq").append(d)});
+$("#tb").onclick=()=>{let tot=0;$$("#tq .q").forEach((d,i)=>{const x=Q[i];let p=0,fb="";
+if(x.k){const v=$("input",d).value.trim().toLowerCase();p=x.k.some(k=>v.startsWith(k))?1:0;fb=p?"Вірно!":"Правильна відповідь: компартменти.";d.classList.toggle("ok",!!p);d.classList.toggle("bad",!p)}
+else{const ch=$$("input:checked",d).map(e=>+e.value),w=ch.filter(v=>!x.a.includes(v)).length,mi=x.a.filter(v=>!ch.includes(v)).length;
+p=x.m?(w+mi==0?2:w+mi==1?1:0):(w+mi==0?1:0);
+$$(".op",d).forEach((l,j)=>{if(x.a.includes(j))l.classList.add("right");else if(ch.includes(j))l.classList.add("wrong")});
+fb=p==x.p?"Вірно!":p?"Частково вірно.":"Невірно. Правильні відповіді позначено зеленим.";$$("input",d).forEach(e=>e.disabled=true)}
+$(".fb",d).textContent=`${fb} Бали: ${p} з ${x.p}`;tot+=p});
+$("#tr").innerHTML=`<div class="card" style="margin-top:14px;text-align:center"><div class="big">${tot} / 12</div><p>${tot>=10?"Відмінно! Ви чудово орієнтуєтесь у будові клітини 🎉":tot>=7?"Добре! Перегляньте картки органел, щоб закріпити 💪":"Варто повторити §17–18 і пройти вправи ще раз 📚"}</p></div>`;$("#tb").disabled=true;$("#tr").scrollIntoView({behavior:"smooth"})};
+
+/* SELF-ASSESSMENT */
+const A=[["Я знаю…","що таке ендоплазматична сітка та які в неї є види"],["Я знаю…","функції комплексу Гольджі, лізосом і вакуоль"],["Я вмію…","порівнювати зернисту й незернисту ЕПС"],["Я вмію…","розрізняти мембранні та немембранні органели"],["Я можу…","пояснити шлях білка від рибосоми до виходу з клітини"],["Я можу…","навести приклади органел руху та їхніх функцій"],["Я розумію…","чому мембранні органели утворюють єдину систему клітини"],["Я розумію…","навіщо рослинній клітині велика вакуоля, а інфузорії — скоротлива"]];
+c=card(`${head("🌟","Картка самооцінювання","Оцініть себе чесно: це допоможе зрозуміти, що повторити.")}<div id="sl"></div><button class="btn" id="sb">Підсумок</button><div id="sm" style="margin-top:12px"></div>`,"self");
+let sv=[],lg="";A.forEach(([g,t],i)=>{if(g!==lg){lg=g;const h=document.createElement("p");h.innerHTML=`<b style="font-size:18px">${g}</b>`;h.style.margin="12px 0 6px";$("#sl").append(h)}
+const r=document.createElement("div");r.className="row";r.innerHTML=`<span style="flex:1 1 260px">${t}</span><span class="seg"><button>Так</button><button>Частково</button><button>Ні</button></span>`;
+$$("button",r).forEach((b,j)=>b.onclick=()=>{sv[i]=2-j;$$("button",r).forEach((x,k)=>x.classList.toggle("sel",k==j))});$("#sl").append(r)});
+const RT=["org","org","mat","cls","ord","org","tf","gap"],RN=Object.fromEntries(T);
+$("#sb").onclick=()=>{const n=sv.filter(v=>v!==undefined).length,o=$("#sm");if(n<A.length){o.innerHTML=`<b class="bad" style="padding:4px 10px;border-radius:8px">Оцініть кожне твердження: заповнено ${n} з ${A.length}</b>`;return}
+const gs={};A.forEach(([g],i)=>{(gs[g]??=[0,0]);gs[g][0]+=sv[i];gs[g][1]+=2});
+const by=v=>A.map((a,i)=>[a[1],i]).filter(([t,i])=>sv[i]===v);
+const list=(v,ttl,cls,act)=>{const r=by(v);return r.length?`<div class="card ${cls}" style="margin:10px 0 0"><b>${ttl}</b><ul style="margin:6px 0 0">${r.map(([t,i])=>`<li>${t}${act?` <button class="btn g" style="padding:2px 10px;font-size:13px" onclick="go('${RT[i]}')">Повторити: ${RN[RT[i]]}</button>`:""}</li>`).join("")}</ul></div>`:""};
+const s=sv.reduce((a,b)=>a+b,0),pc=Math.round(s/(A.length*2)*100);
+o.innerHTML=`<div class="card" style="margin:0"><div class="big">${s} з ${A.length*2} <span style="font-size:20px">(${pc}%)</span></div>
+<p style="margin:4px 0 8px">${Object.entries(gs).map(([g,[a,b]])=>`<span class="pill">${g} ${a} з ${b}</span>`).join("")}</p>
+<p style="margin:0">${pc>=80?"Ви впевнено володієте темою — можна допомагати одногрупникам.":pc>=50?"Базу засвоєно, але є прогалини — їх позначено нижче.":"Тема потребує повторення — почніть із пунктів нижче."}</p></div>`
++list(2,"✅ Я впевнено володію:","ok")+list(1,"🔶 Варто повторити (частково):","","1")+list(0,"❗ Потрібно опрацювати (параграфи 17–18 і вправи):","bad","1")};
+go("start");
+</script>
+</body>
+</html>
